@@ -1,0 +1,76 @@
+%{
+%}
+
+// The start symbol (or non-terminal):
+%start start
+
+// Tokens (or terminals):
+%token <int>    INT
+%token <string> NAME
+%token ELSE FALSE FUNC IF IN LET READ THEN TRUE WRITE
+%token LPAR RPAR COMMA EQ SEMICOLON
+%token PLUS MINUS MULT DIV MOD EQEQ BANGEQ LT LE GT GE ANDAND  OROR 
+%token EOF
+
+// Associativity and precedence:
+
+%nonassoc IN ELSE
+%left     OROR
+%left     ANDAND 
+%left     EQEQ BANGEQ
+%left     LT LE GT GE
+%left     PLUS MINUS
+%left     MULT DIV MOD
+    
+// Declaring the types of the values produced by the different
+// symbols:
+%type <Syntax.prog>      start
+%type <Syntax.prog>      program
+%type <Syntax.def>       definition
+%type <Syntax.def list>  definitions
+%type <Syntax.exp>       expression
+%type <Syntax.exp list>  expressions
+%type <Syntax.exp list>  expression_list
+%type <Syntax.name list> names
+%type <Syntax.name list> name_list
+
+%%
+
+// Grammar rules along with the F# code to execute when they are
+// reduced.
+
+start
+  : program EOF                       { $1 }
+
+program
+  : definitions expression            { Syntax.PROG ($1, $2) }
+  
+definition
+  : FUNC NAME LPAR NAME RPAR EQ expression SEMICOLON { Syntax.FUNC ($2, ($4, $7)) }
+
+definitions
+  :                                   { [] }
+  | definition definitions            { $1 :: $2 }
+  
+expression
+  : INT                               { Syntax.INT $1 }
+  | NAME                              { Syntax.VAR $1 }
+  | LPAR expression RPAR              { $2 }
+  | expression PLUS expression        { Syntax.ADD($1, $3) }
+  | expression MULT expression        { Syntax.MULT($1, $3) }
+  
+expression_list
+  : expression                        { [$1] }
+  | expression COMMA expression_list  { $1 :: $3 }
+    
+expressions
+  :                                   { [] }
+  | expression_list                   { $1 }
+
+name_list
+  : NAME                              { [$1] }
+  | NAME COMMA name_list              { $1 :: $3 }
+    
+names
+  :                                   { [] }
+  | name_list                         { $1 }
