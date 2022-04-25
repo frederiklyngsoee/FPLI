@@ -12,13 +12,8 @@ let keywords =
         ("false",   Parser.FALSE);
         ("func",    Parser.FUNC);
         ("if",      Parser.IF);
-        ("in",      Parser.IN);
-        ("let",     Parser.LET);
-        ("read",    Parser.READ);
-        ("then",    Parser.THEN);
-        ("true",    Parser.TRUE);
-        ("write",   Parser.WRITE);
-        
+        // TODO: ADD MORE KEYWORDS IN A SIMILAR FASHION.  THE TOKENS
+        // ARE DEFINED IN Parser.fsy, LINE 10-12.
     ]
 
 let operators =
@@ -129,7 +124,7 @@ and tokenstream  lexbuf =
                               Parser.LPAR  
 # 125 "Lexer.fs"
           )
-  | 5 -> (
+  | 5 -> ( 
 # 57 "Lexer.fsl"
                               Parser.RPAR  
 # 130 "Lexer.fs"

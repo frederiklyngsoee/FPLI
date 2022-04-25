@@ -39,7 +39,10 @@ let rec comp env = function
     | MULT (e1, e2)     -> comp env e1         @
                            comp ("" :: env) e2 @
                            [Asm.IMUL]
-    | CALL x            -> [NEEEEEEEEEEEEEJ]
+    | CALL (f,e)        -> comp env e          @
+                           [Asm.ICALL f]       @
+                           [Asm.ISWAP]         @
+                           [Asm.IPOP]
     
 let compile = function
     PROG (defs, e) -> comp [] e
