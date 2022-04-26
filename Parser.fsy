@@ -55,11 +55,10 @@ definitions
 expression
   : INT                               { Syntax.INT $1 }
   | NAME                              { Syntax.VAR $1 }
-  | LET NAME EQ expression            { Syntax.CALL($2, $4)}
-  | NAME EQ expression                { Syntax.CALL($1, $3)}
   | LPAR expression RPAR              { $2 }
   | expression PLUS expression        { Syntax.ADD($1, $3) }
   | expression MULT expression        { Syntax.MULT($1, $3) }
+  | LET NAME EQ expression IN expression { Syntax.LET($2, $4, $6)}
   
 expression_list
   : expression                        { [$1] }

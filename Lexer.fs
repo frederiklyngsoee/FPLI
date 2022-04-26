@@ -12,6 +12,8 @@ let keywords =
         ("false",   Parser.FALSE);
         ("func",    Parser.FUNC);
         ("if",      Parser.IF);
+        ("let",     Parser.LET);
+        ("in",      Parser.IN);
         // TODO: ADD MORE KEYWORDS IN A SIMILAR FASHION.  THE TOKENS
         // ARE DEFINED IN Parser.fsy, LINE 10-12.
     ]
@@ -34,7 +36,7 @@ let operators =
         ("||", Parser.OROR);
     ]
 
-# 37 "Lexer.fs"
+# 39 "Lexer.fs"
 let trans : uint16[] array = 
     [| 
     (* State 0 *)
@@ -95,64 +97,64 @@ let rec _fslex_dummy () = _fslex_dummy()
 and tokenstream  lexbuf =
   match _fslex_tables.Interpret(0,lexbuf) with
   | 0 -> ( 
-# 47 "Lexer.fsl"
+# 49 "Lexer.fsl"
                               tokenstream lexbuf // Read more characters
                             
-# 101 "Lexer.fs"
+# 103 "Lexer.fs"
           )
   | 1 -> ( 
-# 49 "Lexer.fsl"
+# 51 "Lexer.fsl"
                               newline lexbuf;
                               tokenstream lexbuf // Read more characters
                             
-# 108 "Lexer.fs"
+# 110 "Lexer.fs"
           )
   | 2 -> ( 
-# 52 "Lexer.fsl"
+# 54 "Lexer.fsl"
                               Parser.INT(int(LexBuffer<_>.LexemeString lexbuf)) 
-# 113 "Lexer.fs"
+# 115 "Lexer.fs"
           )
   | 3 -> ( 
-# 53 "Lexer.fsl"
+# 55 "Lexer.fsl"
                               match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with
                                 | None       -> Parser.NAME(LexBuffer<_>.LexemeString lexbuf)
                                 | Some token -> token 
-# 120 "Lexer.fs"
+# 122 "Lexer.fs"
           )
   | 4 -> ( 
-# 56 "Lexer.fsl"
+# 58 "Lexer.fsl"
                               Parser.LPAR  
-# 125 "Lexer.fs"
+# 127 "Lexer.fs"
           )
   | 5 -> ( 
-# 57 "Lexer.fsl"
+# 59 "Lexer.fsl"
                               Parser.RPAR  
-# 130 "Lexer.fs"
+# 132 "Lexer.fs"
           )
   | 6 -> ( 
-# 58 "Lexer.fsl"
+# 60 "Lexer.fsl"
                               Parser.COMMA  
-# 135 "Lexer.fs"
+# 137 "Lexer.fs"
           )
   | 7 -> ( 
-# 59 "Lexer.fsl"
+# 61 "Lexer.fsl"
                               Parser.SEMICOLON  
-# 140 "Lexer.fs"
+# 142 "Lexer.fs"
           )
   | 8 -> ( 
-# 60 "Lexer.fsl"
+# 62 "Lexer.fsl"
                               operators.[LexBuffer<_>.LexemeString lexbuf] 
-# 145 "Lexer.fs"
+# 147 "Lexer.fs"
           )
   | 9 -> ( 
-# 62 "Lexer.fsl"
+# 64 "Lexer.fsl"
                               Parser.EOF   
-# 150 "Lexer.fs"
+# 152 "Lexer.fs"
           )
   | 10 -> ( 
-# 63 "Lexer.fsl"
+# 65 "Lexer.fsl"
                               failwith ("ParseError" + LexBuffer<_>.LexemeString lexbuf) 
-# 155 "Lexer.fs"
+# 157 "Lexer.fs"
           )
   | _ -> failwith "tokenstream"
 
