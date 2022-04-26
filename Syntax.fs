@@ -8,7 +8,7 @@ type exp    = INT    of int
             | LET    of name * exp * exp
             | IF     of exp * exp * exp
             | VAR    of name
-            | EQEQ     of exp * exp
+            | EQEQ   of exp * exp
             | CALL   of name * exp
             | MULT   of exp * exp
             | OROR   of exp * exp
@@ -17,8 +17,8 @@ type exp    = INT    of int
             | GE     of exp * exp
             | LT     of exp * exp
             | LE     of exp * exp
-            | TRUE   of int 
-            | FALSE  of int
+            | TRUE              
+            | FALSE  
 
             
 type def    = FUNC  of name * (name * exp)
