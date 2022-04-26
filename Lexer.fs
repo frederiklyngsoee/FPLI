@@ -14,8 +14,10 @@ let keywords =
         ("if",      Parser.IF);
         ("let",     Parser.LET);
         ("in",      Parser.IN);
-        // TODO: ADD MORE KEYWORDS IN A SIMILAR FASHION.  THE TOKENS
-        // ARE DEFINED IN Parser.fsy, LINE 10-12.
+        ("read",    Parser.READ);
+        ("then",    Parser.THEN);
+        ("true",    Parser.TRUE);
+        ("write",   Parser.WRITE);
     ]
 
 let operators =

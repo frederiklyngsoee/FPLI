@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\45616\\Desktop\\MP12\\MP1.fsproj": {}
+    "C:\\Users\\marti\\Desktop\\FPLI\\MP1.fsproj": {}
   },
   "projects": {
-    "C:\\Users\\45616\\Desktop\\MP12\\MP1.fsproj": {
+    "C:\\Users\\marti\\Desktop\\FPLI\\MP1.fsproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\45616\\Desktop\\MP12\\MP1.fsproj",
+        "projectUniqueName": "C:\\Users\\marti\\Desktop\\FPLI\\MP1.fsproj",
         "projectName": "MP1",
-        "projectPath": "C:\\Users\\45616\\Desktop\\MP12\\MP1.fsproj",
-        "packagesPath": "C:\\Users\\45616\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\45616\\Desktop\\MP12\\obj\\",
+        "projectPath": "C:\\Users\\marti\\Desktop\\FPLI\\MP1.fsproj",
+        "packagesPath": "C:\\Users\\marti\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\marti\\Desktop\\FPLI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\45616\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\marti\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

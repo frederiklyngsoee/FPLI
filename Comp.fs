@@ -16,6 +16,8 @@ let newLabel _ =
 // Compiler
 let rec comp env = function
     | INT i             -> [Asm.IPUSH i]
+    | TRUE b            -> [Asm.IPUSH 1]
+    | FALSE b           -> [Asm.IPUSH 0]
     | VAR x             -> [Asm.ILOAD (varpos x env)]
     | ADD (e1, e2)      -> comp env e1         @
                            comp ("" :: env) e2 @
