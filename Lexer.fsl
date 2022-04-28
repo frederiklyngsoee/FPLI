@@ -1,0 +1,65 @@
+{
+open FSharp.Text.Lexing
+
+let newline (lexbuf : LexBuffer<_>) =
+    lexbuf.StartPos <- lexbuf.StartPos.NextLine
+
+let keywords =
+    Map.ofList [   
+        ("else",    Parser.ELSE); 
+        ("false",   Parser.FALSE);
+        ("func",    Parser.FUNC);
+        ("if",      Parser.IF);
+        ("let",     Parser.LET);
+        ("in",      Parser.IN);
+        // TODO: ADD MORE KEYWORDS IN A SIMILAR FASHION.  THE TOKENS
+        // ARE DEFINED IN Parser.fsy, LINE 10-12.
+    ]
+
+let operators =
+    Map.ofList [
+        ("=",  Parser.EQ);
+        ("+",  Parser.PLUS);
+        ("-",  Parser.MINUS);
+        ("*",  Parser.MULT);
+        ("/",  Parser.DIV);
+        ("%",  Parser.MOD);
+        ("==", Parser.EQEQ);
+        ("!=", Parser.BANGEQ);
+        ("<",  Parser.LT);
+        ("<=", Parser.LE);
+        (">",  Parser.GT);
+        (">=", Parser.GE);
+        ("&&", Parser.ANDAND);
+        ("||", Parser.OROR);
+    ]
+}
+
+// Regular expressions
+let whitespace = [' ' '\t']
+let newline    = ('\n' | '\r' '\n')
+let letter     = ['a'-'z' 'A'-'Z']
+let digit      = ['0'-'9']
+let int        = '-'?digit+
+let name       = letter (letter | digit)*
+let operator   = "="  | "+" | "-"  | "*" | "/"  | "%"  | "=="
+               | "!=" | "<" | "<=" | ">" | ">=" | "&&" | "||"
+
+rule tokenstream = parse
+| whitespace { tokenstream lexbuf // Read more characters
+             }
+| newline    { newline lexbuf;
+               tokenstream lexbuf // Read more characters
+             }
+| int        { Parser.INT(int(LexBuffer<_>.LexemeString lexbuf)) }
+| name       { match keywords.TryFind(LexBuffer<_>.LexemeString lexbuf) with
+                 | None       -> Parser.NAME(LexBuffer<_>.LexemeString lexbuf)
+                 | Some token -> token }
+| '('        { Parser.LPAR  }
+| ')'        { Parser.RPAR  }
+| ','        { Parser.COMMA  }
+| ';'        { Parser.SEMICOLON  }
+| operator   { operators.[LexBuffer<_>.LexemeString lexbuf] }
+
+| eof        { Parser.EOF   }
+| _          { failwith ("ParseError" + LexBuffer<_>.LexemeString lexbuf) }
