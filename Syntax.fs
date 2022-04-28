@@ -1,6 +1,9 @@
 module Syntax
 
-type name     = string
+type name   = string
+
+type typ    = TINT
+            | TFUN of typ * typ
 
 type exp    = INT    of int
             | NAME   of name
@@ -17,6 +20,8 @@ type exp    = INT    of int
             | GE     of exp * exp
             | LT     of exp * exp
             | LE     of exp * exp
+            | ABS    of name * typ * exp
+            | APP    of exp * exp
             | TRUE              
             | FALSE
             | READ 

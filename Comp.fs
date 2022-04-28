@@ -6,6 +6,10 @@ let rec varpos x = function
   | []       -> failwith ("unbound: " + x)
   | y :: env -> if x = y then 0 else 1 + varpos x env
 
+let rec lookup x = function // This might have to be modified
+  | [] -> failwith ("unbound: " + x)
+  | (y, w) :: env -> if x = y then w else lookup x env
+
 // Generate a new label
 let mutable labelCounter = 0
 let newLabel _ =
@@ -129,6 +133,19 @@ let rec comp env = function
     | READ              -> [Asm.IREAD]
     | WRITE(e1)         -> comp env         e1     @
                            [Asm.IWRITE]
+
+let rec check env = function 
+    | INT i         -> TINT
+    | VAR x         -> lookup x env 
+    | ABS (x, t, e) -> let t' = check ((x,t) :: env) e
+                       TFUN (t, t')
+    | APP (e1, e2)  -> match check env e1 with
+                         | TFUN(t2', t) -> let t2 = check env e2
+                                           if t2 = t2' then 
+                                            t
+                                           else
+                                            failwith "type error" 
+                                          
 
 
 let compile = function
