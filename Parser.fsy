@@ -63,7 +63,7 @@ expression
   | expression OROR expression           { Syntax.OROR($1,$3) }
   | expression ANDAND expression         { Syntax.ANDAND($1,$3) }
   | expression EQEQ expression           { Syntax.EQEQ($1,$3) }
-  | NAME LPAR expression RPAR            { $3 }
+  | NAME LPAR expression RPAR            { Syntax.CALL($1, $3) }
   | expression LT expression             { Syntax.LT($1,$3) }
   | expression LE expression             { Syntax.LE($1,$3) }
   | expression GT expression             { Syntax.GT($1,$3) }
