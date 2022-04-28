@@ -126,6 +126,9 @@ let rec comp env = function
                            [Asm.ILAB   _then1]     @
                            [Asm.IPUSH 0]           @
                            [Asm.ILAB   _after1]
+    | READ              -> [Asm.IREAD]
+    | WRITE(e1)         -> comp env         e1     @
+                           [Asm.IWRITE]
 
 
 let compile = function

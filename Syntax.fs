@@ -18,7 +18,9 @@ type exp    = INT    of int
             | LT     of exp * exp
             | LE     of exp * exp
             | TRUE              
-            | FALSE  
+            | FALSE
+            | READ 
+            | WRITE  of exp
 
             
 type def    = FUNC  of name * (name * exp)
